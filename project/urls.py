@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
+from myspace.sitemaps import PostSitemap
 
 app_name='myspace'
 
+sitemaps = {
+    'posts' : PostSitemap
+}
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-     url(r'blog/', include('myspace.urls')),
+    url(r'', include('myspace.urls',)),
+    url(r'^sitemap\.xml$',sitemap, {'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]

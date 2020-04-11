@@ -1,6 +1,6 @@
 {% extends "blog/master.html" %}
 
-{% block title %}Our Blog{% endblock %}
+{% block title %}dieries of a KenyanDreamer{% endblock %}
 
 <div class="container">
     {% block content %}
@@ -9,7 +9,8 @@
        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
         <p class="small">Published {{ post.publish }} by {{ post.author }}</p>
         <p>{{ post.body|truncatewords:100|linebreaks }}</p>
+        <a href="{{ post.get_absolute_url }}"><p class="btn"  style="background-color: teal;color: white;">Read more</p></a>
     {% endfor %}
-    
+    {% include "pagination.html" with page=posts %}
     {% endblock %}
 </div>

@@ -8,6 +8,8 @@
 </head>
 <body>
   <div class="container">
+    
+      {% include "navbar.html" %}
       <div class="row">
           <div class="col-md-8">
               {% block content %}
@@ -15,10 +17,13 @@
               {% endblock %}
               {% bootstrap_css %}
               {% bootstrap_javascript jquery='full' %}
+              <div id="fb-root"></div>
+              <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
+              <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5e922b997daa0a0012e7bfe6&product=inline-share-buttons" async="async"></script>
           </div>
           <div class="col-md-4">
-              <h3>Muvalab Blog</h3>
-              <p>This is our sidebar</p>
+              <p><a href="{% url 'post_feed' %}" target="_blank">Subscribe to RSS Feed</a></p>
+              <div class="fb-page" data-href="https://www.facebook.com/diariesofakenyandreamer/"  data-width="" data-height=""  data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/diariesofakenyandreamer/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/diariesofakenyandreamer/">Diaries of a KenyanDreamer</a></blockquote></div>
           </div>
       </div>
   </div>

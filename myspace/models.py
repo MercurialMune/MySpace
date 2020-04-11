@@ -3,6 +3,15 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+class tags(models.Model):
+    name = models.CharField(max_length =30)
+
+    def __str__(self):
+        return self.name
+
+
+
+
 # Custom Manager
 
 class PublishedManager(models.Manager):
@@ -10,6 +19,20 @@ class PublishedManager(models.Manager):
         return super(PublishedManager,self).get_queryset().filter(status='published')
 
 # Post Model
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=150, db_index=True)
+#     slug = models.SlugField(max_length=150, unique=True ,db_index=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     class Meta:
+#         ordering = ('name', )
+#         verbose_name = 'category'
+#         verbose_name_plural = 'categories'
+
+#     def __str__(self):
+#         return self.name
 
 class Post(models.Model):
     STATUS_CHOICES = (
@@ -24,6 +47,9 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    # article_image = models.ImageField(upload_to = 'posts/')
+    # tags = models.ManyToManyField(tags)
+    # category = models.ForeignKey(Category, related_name='posts', on_delete=models.CASCADE)
 
     # The default manager
     objects = models.Manager()
@@ -33,9 +59,16 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('-publish',)
+    
+    @classmethod
+    def search_by_title(cls,search_term):
+        post = cls.objects.filter(title__icontains=search_term)
+        return post
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('post_detail_view', args=[self.publish.year, self.publish.strftime('%m'),self.publish.strftime('%d'),self.slug])
+
+

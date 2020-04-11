@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post,tags
 
 # Post registration
 
@@ -13,3 +13,11 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ['status', 'publish']
 
 admin.site.register(Post, PostAdmin)
+admin.site.register(tags)
+
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ['name', 'slug']
+#     prepopulated_fields = {'slug': ('name',)}
+
+
+# admin.site.register(Category, CategoryAdmin)
