@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href='{% url "post_list_view" %}' style="color: rgba(0, 0, 0, .6);"><span style="letter-spacing: 2px; font-family: 'Great Vibes'">Diaries of a</span> <span style="font-family: 'Abril Fatface', cursive;">Kenyan<span style="border-bottom: 3px solid teal;">Dreamer</span></span></a>
+    </div>
+    <!-- Adding a search form  -->
+<div class="col-sm-4 col-md-4 navbar-right">
+  <a href=""><p class="btn col-md-12" style="background-color: teal;color: white;">Check out my Portfolio</p></a>
+</div>
+<!-- search form end -->
+    </div>
+</nav>
+<nav class="navbar navbar-expand-sm container-fluid" style="background-color: teal;">
+    <div class="collapse navbar-collapse container" id="navbarNav">
+      <ul class="navbar-nav">
+        <li {% if not category %} class="active"{% endif %} style="margin-right: 20px;"><a href="{% url 'post_list_view' %}" style="color: white;">Home</a></li>
+        {% for c in categories %}
+              <li {% if category.slug == c.slug %} class="active"{% endif %} style="margin-right: 20px;">
+                <a href="{{ c.get_absolute_url }}" style="color: white;">{{ c.name }}</a>
+            </li>
+                <hr>
+              {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</body>
+</html>
+
+
+
+

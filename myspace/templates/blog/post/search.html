@@ -1,12 +1,13 @@
 {% extends "blog/master.html" %}
+{% block title %}search results page | Diaries of a KenyanDreamer{% endblock %}
 {% block content %}
 <div class="container">
 
   <div class="row">
     {% if articles%}
-      <h2>Found {{ articles|length }} of searched term {{message}}</h2>
+      <h2 class="small">Found {{ articles|length }} of searched term {{message}}</h2>
     {% else %}
-      <h2> Found 0 articles for the search term {{message}}</h2>
+      <h2 class="small">  {{message}}</h2>
     {% endif %}
 
   </div>
@@ -15,11 +16,23 @@
 
   {% if articles %}
     {% for article in articles %}
-      <div class="col-sm-6 col-md-3">
-          <h1>{{article.title}}</h1>
+      <div>
+          <h3 style="font-family: 'Abril Fatface', cursive;"><a href="{{ article.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ article.title }}</a></h3>
+          <p class="small text-muted">Published {{ article.publish }} by {{ article.author }}</p>
+          <hr>
+          <div class="row">
+            <div class="col-md-4">
+              <img src="{{ article.article_image.url}}" alt="Corona-Aftermath" style="height: 250px;width: 260px;">
+            </div>
+            <div class="col-md-7">
+              <p>{{ article.body|truncatewords:50|linebreaks }}</p>
+              <a href="{{ article.get_absolute_url }}"><p class="btn"  style="background-color: teal;color: white;">Read more</p></a>
+            </div>
+          </div>
       </div>
     {% endfor %}
   {% endif %}
+  <hr>
   </div>
 </div>
 {% endblock %}

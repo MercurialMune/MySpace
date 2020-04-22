@@ -1,0 +1,4 @@
+Hello {{name}}
+
+Welcome to the Diaries of a KenyanDreamer newsletter You will find the most exciting Stories from us.
+Karibu sana

@@ -1,0 +1,33 @@
+{% extends "blog/master.html" %}
+{% block title %}{{ category.name }} | Diaries of a KenyanDreamer{% endblock %}
+
+{% block content %}
+<div class="row col-md-12">
+    <div class="col-md-12">
+        <h3 style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">{{ category.name }}</h3>
+    </div>
+    <div class="col-md-12">
+        <p class="small text-muted">Here are posts from our {{ category.name }} category</p>
+    </div>
+    <div class="col-md-12">
+        <hr>
+    </div>
+    {% for posts in post %}
+    <div class="col-md-4">
+        <img src="{{ posts.article_image.url}}" alt="Corona-Aftermath">
+        <h3 style="font-family: 'Abril Fatface', cursive; font-size: 25px;margin-top: 20px;"><a href="{{ posts.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ posts.title }}</a></h3>
+        <p class="small text-muted">Posted on {{ posts.publish }}</p>
+        <p class="small text-muted">{{ posts.author }} in {{ posts.category }}</p>
+        <hr>
+        <p>{{ posts.body|truncatewords:30|linebreaks }}</p>
+        <a href="{{ posts.get_absolute_url }}"><p class="btn"  style="background-color: teal;color: white;">Read more</p></a>
+    </div>
+{% endfor %}
+</div>
+<style>
+    img{
+        height: 250px;
+        width: 230px;
+    }
+</style>
+{% endblock %}

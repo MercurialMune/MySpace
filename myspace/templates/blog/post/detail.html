@@ -1,10 +1,31 @@
-{% extends "blog/master.html" %}
+{% extends "blog/masterz.html" %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }} | Diaries of a KenyanDreamer{% endblock %}
 
 {% block content %}
-   <h3>{{ post.title }}</h3>
-    <p class="small">Published {{ post.publish }} by {{ post.author }}</p>
-    <p>{{ post.body|linebreaks }}</p>
-    <div class="sharethis-inline-share-buttons"></div>
+<div class="container">
+    <h3 class="posttitile" style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">{{ post.title }}</h3>
+<p class="small text-muted">Published {{ post.publish }} by {{ post.author }}</p>
+<hr>
+<img src="{{ post.article_image.url}}" alt="Corona-Aftermath">
+<p>{{ post.body|linebreaks }}</p>
+<p class="small text-muted">Share this Story</p>
+<div class="sharethis-inline-share-buttons"></div>
+</div>
+<p><b>JOIN THE CONVERSATION</b></p>
+<div class="fb-comments col-md-12" data-href="{{ post.get_absolute_url }}" data-numposts="5" data-width="800"></div>
+<style>
+    img{
+        height: 450px;
+        width: 800px;
+    }
+    /* *************MEDIA QUERIES******************* */
+    @media (max-width: 599px) {
+        img{
+        height: 179px;
+        width: 97%;
+    }
+    }
+
+</style>
 {% endblock %}

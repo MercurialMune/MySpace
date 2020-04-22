@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post,tags
+from .models import Post,Category,tags
 
 # Post registration
 
@@ -15,9 +15,9 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 admin.site.register(tags)
 
-# class CategoryAdmin(admin.ModelAdmin):
-#     list_display = ['name', 'slug']
-#     prepopulated_fields = {'slug': ('name',)}
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ('name',)}
 
 
-# admin.site.register(Category, CategoryAdmin)
+admin.site.register(Category, CategoryAdmin)
