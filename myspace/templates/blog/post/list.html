@@ -26,7 +26,7 @@
                 <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" style="height: 100px;width: 150px;"></a>
             </div>
             <div class="col-md-6" style="margin-left: -40px;">
-                <h3 cla style="font-family: 'Abril Fatface', cursive; font-size: 15px;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></h3>
+                <h3  style="font-family: 'Abril Fatface', cursive; font-size: 15px;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></h3>
                 <p class="small text-muted" >Posted on &#x1F4C5; {{ post.publish }} by {{ post.author }}</p>
                 <p class="small text-muted">{{ post.category }}</p>
             </div>
@@ -35,11 +35,9 @@
     </div>
    </div>
    <hr>
-   <div class="container">
-    {% for posts in post %}
-    {% if category.name  == lifestyle %}
-    <h3>{{ posts.title }}</h3>
-    {% endif %}
+   <div>
+    {% for post in article %}
+    <p>good</p>
     {% endfor %}
    </div>
     {% include "pagination.html" with page=posts %}
