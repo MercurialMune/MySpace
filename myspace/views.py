@@ -17,12 +17,19 @@ def post_list_by_category(request , category_slug):
 
 def post_list_view(request, category_slug=None):
     categories = Category.objects.all()
-    post = Post.objects.filter(status='published')
+    post = Post.objects.all()
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         post = post.filter(category=category)
-    list_objects = Post.published.all()
+    list_objects = Post.published.filter(status='published')
     recent = Post.objects.order_by('publish')[0:5]
+    # two posts per category
+    # for category in categories:
+
+
+
+
+
     paginator = Paginator(list_objects, 1)
     page = request.GET.get('page')
     try:

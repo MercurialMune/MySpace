@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 import django.utils.timezone as now
-
+from django.contrib.postgres.fields import ArrayField
 
 class tags( models.Model ):
     name = models.CharField( max_length=30 )
@@ -22,6 +22,7 @@ class PublishedManager( models.Manager ):
 class Category( models.Model ):
     name = models.CharField( max_length=150, db_index=True )
     slug = models.SlugField( max_length=150, unique=True, db_index=True )
+    post_ids = ArrayField(models.IntegerField(null=True), null=True)
     created_at = models.DateTimeField(default=now.now, editable=False )
     updated_at = models.DateTimeField(default=now.now)
 
