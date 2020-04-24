@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 import django.utils.timezone as now
 from django.contrib.postgres.fields import ArrayField
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 
 class tags( models.Model ):
     name = models.CharField( max_length=30 )
@@ -22,9 +25,9 @@ class PublishedManager( models.Manager ):
 class Category( models.Model ):
     name = models.CharField( max_length=150, db_index=True )
     slug = models.SlugField( max_length=150, unique=True, db_index=True )
-    post_ids = ArrayField(models.IntegerField(null=True), null=True)
-    created_at = models.DateTimeField(default=now.now, editable=False )
-    updated_at = models.DateTimeField(default=now.now)
+    post_ids = ArrayField( models.IntegerField( default=0 ), default=list )
+    created_at = models.DateTimeField( default=now.now, editable=False )
+    updated_at = models.DateTimeField( default=now.now )
 
     class Meta:
         ordering = ('name',)
@@ -85,6 +88,13 @@ class Post( models.Model ):
         return reverse( 'post_detail_view',
                         args=[self.publish.year, self.publish.strftime( '%m' ), self.publish.strftime( '%d' ),
                               self.slug] )
+
+
+def save_category_id(sender, instance, **kwargs):
+    instance.category.post_ids.append(instance.id)
+    instance.category.save()
+
+post_save.connect( save_category_id, sender=Post )
 
 
 class NewsLetterRecipients( models.Model ):
