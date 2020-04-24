@@ -1,0 +1,11 @@
+# models
+1. add a post_id field to save ids of all posts under their category
+2. edit category model created_at and updated_at fields
+3. add a custom save() method to category model
+4. created a signal to listen for each time you save a post and update the post_id field in Category model
+# views
+5. mapped all categories to their posts in a dictionary and passed it to context
+# template
+6. interpolation of categories and their posts, loop within a loop
+# admin.py
+7. excluded post_id field from add category form

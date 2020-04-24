@@ -25,20 +25,6 @@ def post_list_view(request, category_slug=None):
         post = post.filter( category=category )
     list_objects = Post.published.filter( status='published' )
     recent = Post.objects.order_by( 'publish' )[0:5]
-
-    # make a dictionary like {
-    # category1 : ['post', 'post'],
-    # category2 : ['post', 'post']
-    # }
-    categorypostdictionary = {category: list(set([Post.objects.get( id=x ) for x in category.post_ids if len( category.post_ids ) > 2])) for
-            category in categories}
-    # categorypostdictionary = all categories with their posts in a dictionary
-    # set() returns non duplicates
-
-    twopercategory = { x: sample(categorypostdictionary[x], 2) for x in categorypostdictionary if len(list(set(categorypostdictionary[x]))) > 1 }  # remove categories with less than two posts - for uniformity
-    # twopercategory = only categories with two or more posts in a dictionary
-    # sample() randomizes the queryset per page... effect only seen with a large number of posts per category
-
     paginator = Paginator( list_objects, 1 )
     page = request.GET.get( 'page' )
     try:
@@ -58,8 +44,22 @@ def post_list_view(request, category_slug=None):
             HttpResponseRedirect( 'post_list_view' )
     else:
         form = NewsLetterForm()
+
+    # map all categories to their posts => {
+    # category1 : ['post1', 'post2'],
+    # category2 : ['post1', 'post2']
+    # }
+    categorypostdictionary = {category: list(set([Post.objects.get( id=x ) for x in category.post_ids if len(category.post_ids) > 2])) for category in categories}
+    # categorypostdictionary = all categories with their posts in a dictionary
+    # set() returns non duplicates
+
+    twopercategory = {x: sample( categorypostdictionary[x], 2 ) for x in categorypostdictionary if len(list(set( categorypostdictionary[x]))) > 1}
+    # twopercategory = only categories with two or more posts in a dictionary
+    # sample() randomizes the queryset per page... effect only seen with a large number of posts per category
+
     return render( request, 'blog/post/list.html',
-                   {'posts': posts, "letterForm": form, 'recent': recent, 'categories': categories, 'post': post, 'twopercategory':twopercategory} )
+                   {'posts': posts, "letterForm": form, 'recent': recent, 'categories': categories, 'post': post,
+                    'twopercategory': twopercategory} )
 
 
 def post_detail_view(request, year, month, day, post, category_slug=None):
